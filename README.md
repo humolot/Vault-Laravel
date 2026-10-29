@@ -4,6 +4,8 @@ Self-hosted, multi-user password manager with groups, built on **Laravel 12 + SQ
 
 > Português: [README.pt-BR.md](README.pt-BR.md)
 
+![GBX Vault](app.png)
+
 ## Features
 
 - **Three-layer sign-in**: password, then security phrase, then **mandatory TOTP 2FA**
