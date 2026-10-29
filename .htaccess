@@ -1,0 +1,22 @@
+# GBX Vault — DocumentRoot na raiz do projeto (padrão aaPanel).
+# Tudo é servido a partir de public/; nada fora dela fica acessível.
+Options -Indexes -MultiViews
+
+<FilesMatch "^\.|\.(env|sqlite|sqlite3|db|log|lock|json|md|xml|yml|yaml|sh|bak|sql)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Bloqueia acesso direto a pastas sensíveis
+    RewriteRule ^(app|bootstrap|config|database|lang|resources|routes|storage|tests|vendor)(/.*)?$ - [F,L]
+
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L,QSA]
+</IfModule>
